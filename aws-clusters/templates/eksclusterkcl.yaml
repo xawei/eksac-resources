@@ -1,3 +1,4 @@
+{{- if .Values.cluster.enabled }}
 apiVersion: consumable.trustbank.sg/v1alpha1
 kind: EksClusterKcl
 metadata:
@@ -30,4 +31,5 @@ spec:
     eks:
       version: {{ .Values.cluster.components.eks.version | quote }}
     karpenterHelm:
-      version: {{ .Values.cluster.components.karpenterHelm.version | quote }} 
+      version: {{ .Values.cluster.components.karpenterHelm.version | quote }}
+{{- end }} 

@@ -129,8 +129,10 @@ The following table lists the configurable parameters and their default values:
 | `global.owner` | Owner of resources | `andyxinan.wei` |
 | `global.location` | AWS region | `ap-southeast-1` |
 | `global.awsAccountId` | AWS Account ID | `249140151390` |
+| `network.enabled` | Enable NetworkKcl resource creation | `true` |
 | `network.name` | Network/VPC name | `andy-network` |
 | `network.vpcCidr` | VPC CIDR block | `10.0.0.0/22` |
+| `cluster.enabled` | Enable EksClusterKcl resource creation | `true` |
 | `cluster.name` | EKS cluster name | `andy-cluster` |
 | `cluster.crossplane.createDefaultAccessEntry` | Create default access entry | `false` |
 | `cluster.crossplane.iamRoleName` | Crossplane IAM role name | `CrossPlaneRole` |
@@ -146,16 +148,42 @@ global:
   awsAccountId: "123456789012"
 
 network:
+  enabled: true
   name: my-network
   vpcCidr: "172.16.0.0/16"
 
 cluster:
+  enabled: true
   name: my-cluster
   components:
     eks:
       version: "1.34"
     ciliumHelm:
       version: "1.18.0"
+```
+
+### Conditional Resource Creation
+
+You can selectively disable resource creation by setting the `enabled` flag to `false`:
+
+```yaml
+# Create only the network, skip the EKS cluster
+network:
+  enabled: true
+  name: my-network
+
+cluster:
+  enabled: false  # This will skip EksClusterKcl creation
+```
+
+```yaml
+# Create only the EKS cluster, skip the network (if it already exists)
+network:
+  enabled: false  # This will skip NetworkKcl creation
+
+cluster:
+  enabled: true
+  name: my-cluster
 ```
 
 ### Environment-Specific Values Files
@@ -201,6 +229,31 @@ helm:
   valueFiles:
     - values.yaml
     - values-prod.yaml  # or values-dev.yaml
+```
+
+### ArgoCD with Conditional Resources
+
+You can also control resource creation directly in ArgoCD Application specs:
+
+```yaml
+# Create only network resources
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: aws-network-only
+  namespace: argocd
+spec:
+  # ... other config ...
+  source:
+    # ... repo config ...
+    helm:
+      valueFiles:
+        - values.yaml
+      values: |
+        network:
+          enabled: true
+        cluster:
+          enabled: false
 ```
 
 ## Uninstallation

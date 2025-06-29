@@ -10,6 +10,7 @@ global:
 
 # Network configuration
 network:
+  enabled: true  # Set to false to skip NetworkKcl creation
   name: andy-network
   vpcCidr: "10.0.0.0/22"
   subnets:
@@ -20,6 +21,7 @@ network:
 
 # EKS Cluster configuration
 cluster:
+  enabled: true  # Set to false to skip EksClusterKcl creation
   name: andy-cluster
   subnets:
     private:
