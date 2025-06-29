@@ -38,14 +38,17 @@ The resources in this repository are **Crossplane Composite Resources (XRs)**. T
 
 ### Deploy via ArgoCD
 
-Each directory in this repository can be deployed as an ArgoCD Application. For example, to deploy the AWS clusters:
+Each directory in this repository can be deployed as an ArgoCD Application. To deploy the AWS clusters:
 
-```yaml
+```bash
+kubectl apply -f - <<EOF
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: aws-clusters
   namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
   source:
@@ -64,6 +67,8 @@ spec:
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
+      - ServerSideApply=true
+EOF
 ```
 
 ### GitOps Workflow
