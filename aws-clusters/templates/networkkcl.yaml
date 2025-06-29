@@ -1,0 +1,16 @@
+apiVersion: consumable.trustbank.sg/v1alpha1
+kind: NetworkKcl
+metadata:
+  name: {{ .Values.network.name }}
+  namespace: {{ .Values.global.namespace }}
+  labels:
+    consumable.trustbank.sg/owner: {{ .Values.global.owner | quote }}
+spec:
+  name: {{ .Values.network.name }}
+  location: {{ .Values.global.location | quote }}
+  vpcCidr: {{ .Values.network.vpcCidr | quote }}
+  subnets:
+    public:
+      1a: {{ .Values.network.subnets.public.1a | quote }}
+      1b: {{ .Values.network.subnets.public.1b | quote }}
+      1c: {{ .Values.network.subnets.public.1c | quote }} 

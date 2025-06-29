@@ -1,0 +1,14 @@
+apiVersion: v2
+name: aws-clusters
+description: A Helm chart for AWS EKS clusters and networking using Crossplane
+type: application
+version: 0.1.0
+appVersion: "1.0"
+keywords:
+  - aws
+  - eks
+  - crossplane
+  - networking
+maintainers:
+  - name: Andy Wei
+    email: andyxinan.wei@trustbank.sg 

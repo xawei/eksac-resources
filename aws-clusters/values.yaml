@@ -1,0 +1,48 @@
+# Default values for aws-clusters
+# This is a YAML-formatted file.
+
+# Global configuration
+global:
+  namespace: eksac
+  owner: "andyxinan.wei"
+  location: "ap-southeast-1"
+  awsAccountId: "249140151390"
+
+# Network configuration
+network:
+  name: andy-network
+  vpcCidr: "10.0.0.0/22"
+  subnets:
+    public:
+      1a: "10.0.0.0/28"
+      1b: "10.0.0.16/28"
+      1c: "10.0.0.32/28"
+
+# EKS Cluster configuration
+cluster:
+  name: andy-cluster
+  subnets:
+    private:
+      1a: "10.0.0.128/25"
+      1b: "10.0.1.0/25"
+      1c: "10.0.1.128/25"
+  
+  # Crossplane configuration
+  crossplane:
+    createDefaultAccessEntry: false
+    iamRoleName: "CrossPlaneRole"
+  
+  # Component versions
+  components:
+    ciliumHelm:
+      version: "1.17.3"
+    corednsHelm:
+      version: "1.42.1"
+    ebscsiAddOn:
+      version: "v1.43.0-eksbuild.1"
+    podidentityagentAddOn:
+      version: "v1.3.7-eksbuild.2"
+    eks:
+      version: "1.33"
+    karpenterHelm:
+      version: "1.5.0" 

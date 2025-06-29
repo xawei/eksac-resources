@@ -1,0 +1,33 @@
+apiVersion: consumable.trustbank.sg/v1alpha1
+kind: EksClusterKcl
+metadata:
+  name: {{ .Values.cluster.name }}
+  namespace: {{ .Values.global.namespace }}
+  labels:
+    consumable.trustbank.sg/owner: {{ .Values.global.owner | quote }} # Specify the owner of the cluster
+  annotations:
+    consumable.trustbank.sg/create-default-access-entry: {{ .Values.cluster.crossplane.createDefaultAccessEntry | quote }} # Specify if the default access entry should be created
+    consumable.trustbank.sg/crossplane-iam-role-name: {{ .Values.cluster.crossplane.iamRoleName | quote }} # Specify the name of the crossplane IAM role
+spec:
+  name: {{ .Values.cluster.name }}
+  location: {{ .Values.global.location | quote }}
+  awsAccountId: {{ .Values.global.awsAccountId | quote }} # Replace with your AWS account ID
+  vpcRef: {{ .Values.network.name }}
+  subnets:
+    private:
+      1a: {{ .Values.cluster.subnets.private.1a | quote }}
+      1b: {{ .Values.cluster.subnets.private.1b | quote }}
+      1c: {{ .Values.cluster.subnets.private.1c | quote }}
+  components:
+    ciliumHelm:
+      version: {{ .Values.cluster.components.ciliumHelm.version | quote }}
+    corednsHelm:
+      version: {{ .Values.cluster.components.corednsHelm.version | quote }}
+    ebscsiAddOn:
+      version: {{ .Values.cluster.components.ebscsiAddOn.version | quote }}
+    podidentityagentAddOn:
+      version: {{ .Values.cluster.components.podidentityagentAddOn.version | quote }}
+    eks:
+      version: {{ .Values.cluster.components.eks.version | quote }}
+    karpenterHelm:
+      version: {{ .Values.cluster.components.karpenterHelm.version | quote }} 
