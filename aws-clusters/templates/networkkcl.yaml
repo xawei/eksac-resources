@@ -11,6 +11,6 @@ spec:
   vpcCidr: {{ .Values.network.vpcCidr | quote }}
   subnets:
     public:
-      1a: {{ .Values.network.subnets.public.1a | quote }}
-      1b: {{ .Values.network.subnets.public.1b | quote }}
-      1c: {{ .Values.network.subnets.public.1c | quote }} 
+      1a: {{ index .Values.network.subnets.public "1a" | quote }}
+      1b: {{ index .Values.network.subnets.public "1b" | quote }}
+      1c: {{ index .Values.network.subnets.public "1c" | quote }} 

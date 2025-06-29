@@ -15,9 +15,9 @@ spec:
   vpcRef: {{ .Values.network.name }}
   subnets:
     private:
-      1a: {{ .Values.cluster.subnets.private.1a | quote }}
-      1b: {{ .Values.cluster.subnets.private.1b | quote }}
-      1c: {{ .Values.cluster.subnets.private.1c | quote }}
+      1a: {{ index .Values.cluster.subnets.private "1a" | quote }}
+      1b: {{ index .Values.cluster.subnets.private "1b" | quote }}
+      1c: {{ index .Values.cluster.subnets.private "1c" | quote }}
   components:
     ciliumHelm:
       version: {{ .Values.cluster.components.ciliumHelm.version | quote }}
