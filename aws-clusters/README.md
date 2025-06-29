@@ -30,8 +30,8 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://your-git-repo.com/path/to/repo
-    targetRevision: HEAD
+    repoURL: https://github.com/xawei/eksac-resources.git
+    targetRevision: main
     path: aws-clusters
     helm:
       valueFiles:
